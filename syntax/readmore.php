@@ -1,4 +1,8 @@
 <?php
+
+use dokuwiki\Extension\SyntaxPlugin;
+use dokuwiki\Parsing\Handler;
+
 /**
  * Include plugin (editbtn header component)
  *
@@ -6,25 +10,29 @@
  * @author  Michael Hamann <michael@content-space.de>
  */
 
-class syntax_plugin_include_readmore extends DokuWiki_Syntax_Plugin {
-
-    function getType() {
+class syntax_plugin_include_readmore extends SyntaxPlugin
+{
+    public function getType()
+    {
         return 'formatting';
     }
 
-    function getSort() {
+    public function getSort()
+    {
         return 50;
     }
 
-    function handle($match, $state, $pos, Doku_Handler $handler) {
+    public function handle($match, $state, $pos, Handler $handler)
+    {
         // this is a syntax plugin that doesn't offer any syntax, so there's nothing to handle by the parser
     }
 
-    function render($mode, Doku_Renderer $renderer, $data) {
-        list($page) = $data;
+    public function render($mode, Doku_Renderer $renderer, $data)
+    {
+        [$page] = $data;
 
         if ($mode == 'xhtml') {
-            $renderer->doc .= DOKU_LF.'<p class="include_readmore">'.DOKU_LF;
+            $renderer->doc .= DOKU_LF . '<p class="include_readmore">' . DOKU_LF;
         } else {
             $renderer->p_open();
         }
@@ -32,7 +40,7 @@ class syntax_plugin_include_readmore extends DokuWiki_Syntax_Plugin {
         $renderer->internallink($page, $this->getLang('readmore'));
 
         if ($mode == 'xhtml') {
-            $renderer->doc .= DOKU_LF.'</p>'.DOKU_LF;
+            $renderer->doc .= DOKU_LF . '</p>' . DOKU_LF;
         } else {
             $renderer->p_close();
         }
